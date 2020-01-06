@@ -3,15 +3,12 @@ package org.lucasbernardo.healthcareinstitution.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Id;
-import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
@@ -41,11 +38,6 @@ public class HealthcareInstitution implements Serializable {
   @JsonIgnore
   private Integer balance = 20;
 
-  @OneToMany(mappedBy = "healthcareInstitution")
-  @MapKey(name = "id")
-  @JsonIgnore
-  private Map<Integer, Exam> exams;
-
   public Integer getId() {
     return id;
   }
@@ -72,9 +64,5 @@ public class HealthcareInstitution implements Serializable {
 
   public void charge() {
     this.balance -= 1;
-  }
-
-  public Map<Integer, Exam> getExams() {
-    return exams;
   }
 }

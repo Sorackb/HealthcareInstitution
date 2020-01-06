@@ -24,7 +24,7 @@ public class HealthcareInstitutionService {
   public HealthcareInstitution findById(Integer id) {
     return this.healthcareInstitutionRepository
             .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("HealthcareInstitution", id + " not found."));
+            .orElseThrow(() -> new ResourceNotFoundException("HealthcareInstitution", "id \"" + id + "\" not found."));
   }
 
   public HealthcareInstitution charge(Integer id) {
