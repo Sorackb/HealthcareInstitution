@@ -34,7 +34,7 @@ public class HealthcareInstitutionService {
 
   public HealthcareInstitution charge(HealthcareInstitution healthcareInstitution) {
     if (healthcareInstitution.getBalance() == 0) {
-      throw new BusinessRuleException("HealthcareInstitution", "Out of budget");
+      throw new BusinessRuleException("HealthcareInstitution", "Out of budget.");
     }
 
     healthcareInstitution.charge();

@@ -23,12 +23,12 @@ An API that will take control over the healthcare institution registration as we
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ "id": 4, "Name": "lucasbernardo.org", "CNPJ": "16.191.374/0001-71" }`
+    **Content:** `{ "id": 4, "Name": "lucasbernardo.org", "CNPJ": "16191374000171" }`
 
 * **Error Response:**
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
-    **Content:** `{ "cnpj": "Duplicate entry '16.191.374/0001-71' for key 'CNPJ'" }`
+    **Content:** `{ "cnpj": "Duplicate entry '16191374000171' for key 'CNPJ'" }`
 
   OR
 
@@ -94,7 +94,7 @@ An API that will take control over the healthcare institution registration as we
     "healthcareInstitution": {
       "id": 1,
       "Name": "lucasbernardo.org",
-      "CNPJ": "16.191.374/0001-71"
+      "CNPJ": "16191374000171"
     },
     "PatientName": "John Doe",
     "PatientAge": 55,
@@ -187,7 +187,7 @@ An API that will take control over the healthcare institution registration as we
     "healthcareInstitution": {
       "id": 1,
       "Name": "lucasbernardo.org",
-      "CNPJ": "16.191.374/0001-71"
+      "CNPJ": "16191374000171"
     },
     "PatientName": "John Doe",
     "PatientAge": 55,
@@ -316,7 +316,7 @@ An API that will take control over the healthcare institution registration as we
     "healthcareInstitution": {
       "id": 1,
       "Name": "lucasbernardo.org",
-      "CNPJ": "16.191.374/0001-71"
+      "CNPJ": "16191374000171"
     },
     "PatientName": "John Doe",
     "PatientAge": 55,
