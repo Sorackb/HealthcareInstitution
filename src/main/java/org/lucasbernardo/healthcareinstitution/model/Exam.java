@@ -1,12 +1,11 @@
 package org.lucasbernardo.healthcareinstitution.model;
 
+import org.lucasbernardo.healthcareinstitution.model.type.GenderType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.lucasbernardo.healthcareinstitution.model.validator.ValueOfEnum;
 
 /**
  *
@@ -33,28 +33,28 @@ public class Exam implements Serializable {
   private HealthcareInstitution healthcareInstitution;
   @Column(name = "patient_name", nullable = false)
   @JsonProperty("PatientName")
-  @NotBlank(message = "PatientName is mandatory")
+  @NotBlank(message = "PatientName is mandatory.")
   private String patientName;
   @Column(name = "patient_age", nullable = false)
   @JsonProperty("PatientAge")
-  @NotNull(message = "PatientAge is mandatory")
+  @NotNull(message = "PatientAge is mandatory.")
   private Integer patientAge;
   @Column(name = "patient_gender", nullable = false)
-  @Enumerated(EnumType.STRING)
+  @ValueOfEnum(enumClass = GenderType.class, message = "PatientGender must be \"M\" or \"F\".")
   @JsonProperty("PatientGender")
-  @NotNull(message = "PatientGender is mandatory")
-  private Gender patientGender;
+  @NotNull(message = "PatientGender is mandatory.")
+  private String patientGender;
   @Column(name = "physician_name", nullable = false)
   @JsonProperty("PhysicianName")
-  @NotBlank(message = "PhysicianName is mandatory")
+  @NotBlank(message = "PhysicianName is mandatory.")
   private String physicianName;
   @Column(name = "physician_crm", nullable = false)
   @JsonProperty("PhysicianCRM")
-  @NotBlank(message = "PhysicianCRM is mandatory")
+  @NotBlank(message = "PhysicianCRM is mandatory.")
   private String physicianCRM;
   @Column(name = "procedure_name", nullable = false)
   @JsonProperty("ProcedureName")
-  @NotBlank(message = "ProcedureName is mandatory")
+  @NotBlank(message = "ProcedureName is mandatory.")
   private String procedureName;
   @Column(name = "charged", nullable = false)
   @JsonIgnore
@@ -92,11 +92,11 @@ public class Exam implements Serializable {
     this.patientAge = patientAge;
   }
 
-  public Gender getPatientGender() {
+  public String getPatientGender() {
     return patientGender;
   }
 
-  public void setPatientGender(Gender patientGender) {
+  public void setPatientGender(String patientGender) {
     this.patientGender = patientGender;
   }
 

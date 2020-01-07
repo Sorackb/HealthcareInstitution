@@ -3,7 +3,7 @@ package org.lucasbernardo.healthcareinstitution.service;
 import org.lucasbernardo.healthcareinstitution.exception.BusinessRuleException;
 import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
-import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitutionRepository;
+import org.lucasbernardo.healthcareinstitution.model.repository.HealthcareInstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,7 @@ public class HealthcareInstitutionService {
   private HealthcareInstitutionRepository healthcareInstitutionRepository;
 
   public HealthcareInstitution create(HealthcareInstitution healthcareInstitution) {
+    healthcareInstitution.setCnpj(healthcareInstitution.getCnpj().replaceAll("\\D", ""));
     return this.healthcareInstitutionRepository.save(healthcareInstitution);
   }
 

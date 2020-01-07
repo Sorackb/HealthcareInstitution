@@ -1,10 +1,10 @@
-package org.lucasbernardo.healthcareinstitution.model;
+package org.lucasbernardo.healthcareinstitution.model.type;
 
 /**
  *
  * @author Lucas<sorackb@gmail.com>
  */
-public enum Gender {
+public enum GenderType {
   //M("MALE"), F("FEMALE");
   M, F;
 }

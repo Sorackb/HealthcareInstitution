@@ -33,7 +33,12 @@ An API that will take control over the healthcare institution registration as we
   OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "cnpj": "CNPJ is mandatory" }`
+    **Content:** `{ "cnpj": "CNPJ is mandatory." }`
+
+  OR
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ "cnpj": "Invalid CNPJ." }`
 
 * **Sample Call:**
 
@@ -108,12 +113,17 @@ An API that will take control over the healthcare institution registration as we
   OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientName": "PatientName is mandatory" }`
+    **Content:** `{ "patientName": "PatientName is mandatory." }`
+
+  OR
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ "patientGender": "PatientGender must be any \"M\" or \"F\"." }`
 
   OR
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
-    **Content:** `{ "HealthcareInstitution": "Out of budget" }`
+    **Content:** `{ "HealthcareInstitution": "Out of budget." }`
 
 * **Sample Call:**
 
@@ -201,7 +211,7 @@ An API that will take control over the healthcare institution registration as we
   OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientName": "PatientName is mandatory" }`
+    **Content:** `{ "patientName": "PatientName is mandatory." }`
 
 * **Sample Call:**
 
@@ -262,7 +272,7 @@ An API that will take control over the healthcare institution registration as we
   OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientName": "PatientName is mandatory" }`
+    **Content:** `{ "patientName": "PatientName is mandatory." }`
 
 * **Sample Call:**
 
@@ -325,12 +335,12 @@ An API that will take control over the healthcare institution registration as we
   OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientName": "PatientName is mandatory" }`
+    **Content:** `{ "patientName": "PatientName is mandatory." }`
 
   OR
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
-    **Content:** `{ "HealthcareInstitution": "Out of budget" }`
+    **Content:** `{ "HealthcareInstitution": "Out of budget." }`
 
 * **Sample Call:**
 

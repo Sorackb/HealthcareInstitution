@@ -3,7 +3,7 @@ package org.lucasbernardo.healthcareinstitution.service;
 import java.util.List;
 import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundException;
 import org.lucasbernardo.healthcareinstitution.model.Exam;
-import org.lucasbernardo.healthcareinstitution.model.ExamRepository;
+import org.lucasbernardo.healthcareinstitution.model.repository.ExamRepository;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
