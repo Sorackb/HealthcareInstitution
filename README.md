@@ -334,8 +334,8 @@ An API that will take control over the healthcare institution registration as we
 
   OR
 
-  * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientName": "PatientName is mandatory." }`
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ "Exam": "id \"2\" not found." }`
 
   OR
 
