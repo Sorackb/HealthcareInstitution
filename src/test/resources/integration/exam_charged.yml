@@ -1,0 +1,10 @@
+exam:
+   - id: 1
+     healthcare_institution_id: 1
+     patient_name: João
+     patient_age: 55
+     patient_gender: M
+     physician_name: Dr. José
+     physician_crm: "45465223"
+     procedure_name: MRI
+     charged: true
