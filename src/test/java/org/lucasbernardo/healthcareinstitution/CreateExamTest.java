@@ -1,4 +1,4 @@
-package org.lucasbernardo.HealthcareInstitution;
+package org.lucasbernardo.healthcareinstitution;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.spring.api.DBRider;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +23,10 @@ import org.springframework.test.context.ActiveProfiles;
  *
  * @author Lucas<sorackb@gmail.com>
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = HealthcareInstitutionApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles({"test"})
 @DBRider
-public class UpdateExamTest {
+public class CreateExamTest {
 
   private static final HttpHeaders HEADERS = new HttpHeaders();
 
@@ -42,8 +41,8 @@ public class UpdateExamTest {
   }
 
   @Test
-  @DataSet({"integration/exam.yml", "integration/healthcare_institution.yml", "integration/cleanup.yml"})
-  void updateExam_ValidExam_ShouldUpdateExistentExam() throws JSONException {
+  @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
+  void createExam_ValidExam_ShouldCreateNewExam() throws JSONException {
     JSONObject exam = new JSONObject();
     ResponseEntity<String> response;
     HttpEntity<String> request;
@@ -56,7 +55,7 @@ public class UpdateExamTest {
     exam.put("ProcedureName", "MRI");
 
     request = new HttpEntity<>(exam.toString(), HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.PUT, request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     JSONAssert.assertEquals(exam.toString(), response.getBody(), false);
@@ -64,7 +63,7 @@ public class UpdateExamTest {
 
   @Test
   @DataSet({"integration/cleanup.yml"})
-  void updateExam_InvalidHealthcareInstitution_ShouldShowErrorMessage() throws JSONException {
+  void createExam_InvalidHealthcareInstitution_ShouldShowErrorMessage() throws JSONException {
     JSONObject exam = new JSONObject();
     JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
@@ -78,7 +77,7 @@ public class UpdateExamTest {
     exam.put("ProcedureName", "MRI");
 
     request = new HttpEntity<>(exam.toString(), HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.PUT, request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     errors.put("HealthcareInstitution", "id \"1\" not found.");
@@ -87,36 +86,13 @@ public class UpdateExamTest {
 
   @Test
   @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
-  void updateExam_InvalidExam_ShouldShowErrorMessage() throws JSONException {
-    JSONObject exam = new JSONObject();
-    JSONObject errors = new JSONObject();
-    ResponseEntity<String> response;
-    HttpEntity<String> request;
-
-    exam.put("PatientName", "João");
-    exam.put("PatientAge", 55);
-    exam.put("PatientGender", "M");
-    exam.put("PhysicianName", "Dr. José");
-    exam.put("PhysicianCRM", "45465223");
-    exam.put("ProcedureName", "MRI");
-
-    request = new HttpEntity<>(exam.toString(), HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.PUT, request, String.class);
-
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    errors.put("Exam", "id \"1\" not found.");
-    JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
-  }
-
-  @Test
-  @DataSet({"integration/exam.yml", "integration/healthcare_institution.yml", "integration/cleanup.yml"})
-  void updateExam_IncompleteExam_ShouldShowErrorMessage() throws JSONException {
+  void createExam_IncompleteExam_ShouldShowErrorMessage() throws JSONException {
     JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
     HttpEntity<String> request;
 
     request = new HttpEntity<>("{}", HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.PUT, request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
@@ -131,8 +107,8 @@ public class UpdateExamTest {
   }
 
   @Test
-  @DataSet({"integration/exam.yml", "integration/healthcare_institution.yml", "integration/cleanup.yml"})
-  void updateExam_InvalidPatientGender_ShouldShowErrorMessage() throws JSONException {
+  @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
+  void createExam_InvalidPatientGender_ShouldShowErrorMessage() throws JSONException {
     JSONObject exam = new JSONObject();
     JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
@@ -146,7 +122,7 @@ public class UpdateExamTest {
     exam.put("ProcedureName", "MRI");
 
     request = new HttpEntity<>(exam.toString(), HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.PUT, request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     errors.put("patientGender", "PatientGender must be \"M\" or \"F\".");
@@ -154,9 +130,10 @@ public class UpdateExamTest {
   }
 
   @Test
-  @DataSet({"integration/exam.yml", "integration/healthcare_institution_uncharged.yml", "integration/cleanup.yml"})
-  void updateExam_HealthcareInstitutionWithoutPixeons_ShouldUpdateExistentExam() throws JSONException {
+  @DataSet({"integration/healthcare_institution_uncharged.yml", "integration/cleanup.yml"})
+  void createExam_HealthcareInstitutionWithoutPixeons_ShouldShowErrorMessage() throws JSONException {
     JSONObject exam = new JSONObject();
+    JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
     HttpEntity<String> request;
 
@@ -168,9 +145,10 @@ public class UpdateExamTest {
     exam.put("ProcedureName", "MRI");
 
     request = new HttpEntity<>(exam.toString(), HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.PUT, request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/", request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    JSONAssert.assertEquals(exam.toString(), response.getBody(), false);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    errors.put("HealthcareInstitution", "Out of budget.");
+    JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
 }
