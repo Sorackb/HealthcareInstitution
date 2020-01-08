@@ -7,7 +7,8 @@ services:
   - docker
 # Test & Build SpringBoot app
 script:
-  - mvn clean package -DskipTests
+  - mvn test
+  - mvn clean package
 # Create Docker image for our app and push it to Dockerhub repository
 after_success:
   - export COMMIT=${TRAVIS_COMMIT::7}
