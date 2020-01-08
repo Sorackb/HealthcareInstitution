@@ -1,4 +1,4 @@
-package org.lucasbernardo.HealthcareInstitution;
+package org.lucasbernardo.healthcareinstitution;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
