@@ -118,7 +118,7 @@ An API that will take control over the healthcare institution registration as we
   OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientGender": "PatientGender must be any \"M\" or \"F\"." }`
+    **Content:** `{ "patientGender": "PatientGender must be \"M\" or \"F\"." }`
 
   OR
 
@@ -213,6 +213,11 @@ An API that will take control over the healthcare institution registration as we
   * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "patientName": "PatientName is mandatory." }`
 
+  OR
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ "patientGender": "PatientGender must be \"M\" or \"F\"." }`
+
 * **Sample Call:**
 
   ```javascript
@@ -268,11 +273,6 @@ An API that will take control over the healthcare institution registration as we
 
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ "Exam": "id \"2\" not found." }`
-
-  OR
-
-  * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ "patientName": "PatientName is mandatory." }`
 
 * **Sample Call:**
 

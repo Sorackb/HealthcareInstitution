@@ -11,7 +11,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author Prof. Omero Francisco Bertol<http://paginapessoal.utfpr.edu.br/omero>
  */
 public class CnpjValidator implements ConstraintValidator<Cnpj, String> {
-  
+
   private final List<String> invalid = Arrays.asList("00000000000000", "11111111111111",
           "22222222222222", "33333333333333",
           "44444444444444", "55555555555555",
@@ -20,7 +20,7 @@ public class CnpjValidator implements ConstraintValidator<Cnpj, String> {
 
   public boolean isCnpj(String cnpj) {
     cnpj = cnpj.replaceAll("\\D", "");
-    
+
     // considera-se erro Cnpj's formados por uma sequencia de numeros iguais
     if (this.invalid.contains(cnpj) || (cnpj.length() != 14)) {
       return false;
@@ -86,6 +86,10 @@ public class CnpjValidator implements ConstraintValidator<Cnpj, String> {
 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {
+    if (value == null) {
+      return true;
+    }
+
     return this.isCnpj(value);
   }
 }
