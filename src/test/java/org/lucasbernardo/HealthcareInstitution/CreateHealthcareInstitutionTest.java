@@ -25,7 +25,7 @@ import org.springframework.test.context.ActiveProfiles;
  *
  * @author Lucas<sorackb@gmail.com>
  */
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = HealthcareInstitutionApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles({"test"})
 @DBRider
 public class CreateHealthcareInstitutionTest {

@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
  *
  * @author Lucas<sorackb@gmail.com>
  */
-@SpringBootTest
+@SpringBootTest(classes = HealthcareInstitutionApplication.class)
 @ActiveProfiles({"test"})
 @DBRider
 class HealthcareInstitutionApplicationTests {
