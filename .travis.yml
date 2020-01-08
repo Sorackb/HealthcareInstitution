@@ -21,7 +21,7 @@ after_success:
 deploy:
   provider: heroku
   api-key: $HEROKU_API_KEY
-  app: healthcare_institution
+  app: healthcare-institution
   on:
     tags: true
     repo: "$IMAGE_NAME"
