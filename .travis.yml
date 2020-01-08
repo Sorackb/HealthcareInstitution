@@ -6,7 +6,6 @@ jdk:
 services:
   - docker
 before_install:
-  - chmod +x mvnw
   - docker pull openjdk:8-jdk-alpine
 # Test & Build SpringBoot app
 script:
