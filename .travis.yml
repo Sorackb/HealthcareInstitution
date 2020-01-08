@@ -13,7 +13,6 @@ before_install:
   - docker pull openjdk:8-jdk-alpine
 # Test & Build SpringBoot app
 script:
-  - mvn test
   - mvn clean package
 # Create Docker image for our app and push it to Dockerhub repository
 after_success:
