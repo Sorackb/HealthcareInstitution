@@ -20,8 +20,7 @@ after_success:
 # Allow Travis to help deploy the app on Heroku
 deploy:
   provider: heroku
-  api-key:
-    secure: "$HEROKU_API_KEY"
+  api-key: $HEROKU_API_KEY
   app: healthcare_institution
   on:
     tags: true
