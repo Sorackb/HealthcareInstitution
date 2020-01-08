@@ -24,4 +24,3 @@ deploy:
   app: healthcare-institution
   on:
     tags: true
-    repo: "$IMAGE_NAME"
