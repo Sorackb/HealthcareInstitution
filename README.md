@@ -1,4 +1,11 @@
 # HealthcareInstitution
+
+[![Build Status][ci-img]][ci]
+
+[ci-img]:          https://travis-ci.org/Sorackb/HealthcareInstitution.svg
+[ci]:              https://travis-ci.org/Sorackb/HealthcareInstitution
+
+
 An API that will take control over the healthcare institution registration as well as the exams ingest.
 
 **Create a Healthcare Institution**
