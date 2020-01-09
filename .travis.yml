@@ -16,7 +16,7 @@ after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker-compose build
   - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
-  - docker push $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:$TAG
 # Allow Travis to help deploy the app on Heroku
 deploy:
   provider: heroku
