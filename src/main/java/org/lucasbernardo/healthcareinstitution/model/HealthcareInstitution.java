@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import org.lucasbernardo.healthcareinstitution.model.validator.Cnpj;
 
 /**
@@ -27,12 +28,14 @@ public class HealthcareInstitution implements Serializable {
 
   @Column(nullable = false)
   @JsonProperty("Name")
+  @NotNull(message = "Name is mandatory.")
   @NotBlank(message = "Name is mandatory.")
   private String name;
 
   @Cnpj
   @Column(nullable = false)
   @JsonProperty("CNPJ")
+  @NotNull(message = "CNPJ is mandatory.")
   @NotBlank(message = "CNPJ is mandatory.")
   private String cnpj;
 

@@ -8,6 +8,12 @@
 
 An API that will take control over the healthcare institution registration as well as the exams ingest.
 
+## API documentation
+
+A API description and try-out methods can be viewed in the following URL:
+
+  /swagger-ui.html
+
 **Create a Healthcare Institution**
 ---
   Creates a single Healthcare Institution.
@@ -129,6 +135,11 @@ An API that will take control over the healthcare institution registration as we
 
   OR
 
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ "patientAge": "PatientAge should be a positive integer." }`
+
+  OR
+
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ "HealthcareInstitution": "Out of budget." }`
 
@@ -224,6 +235,11 @@ An API that will take control over the healthcare institution registration as we
 
   * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "patientGender": "PatientGender must be \"M\" or \"F\"." }`
+
+  OR
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ "patientAge": "PatientAge should be a positive integer." }`
 
 * **Sample Call:**
 

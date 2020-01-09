@@ -108,6 +108,31 @@ public class CreateExamTest {
 
   @Test
   @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
+  void createExam_InvalidPatientAge_ShouldShowErrorMessage() throws JSONException {
+    JSONObject exam = new JSONObject();
+    JSONObject errors = new JSONObject();
+    ResponseEntity<String> response;
+    HttpEntity<String> request;
+
+    exam.put("PatientName", "João");
+    exam.put("PatientAge", -1);
+    exam.put("PatientGender", "M");
+    exam.put("PhysicianName", "Dr. José");
+    exam.put("PhysicianCRM", "45465223");
+    exam.put("ProcedureName", "MRI");
+
+    request = new HttpEntity<>(exam.toString(), HEADERS);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/", request, String.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    errors.put("patientAge", "PatientAge should be a positive integer.");
+
+    JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
+  }
+
+  @Test
+  @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
   void createExam_InvalidPatientGender_ShouldShowErrorMessage() throws JSONException {
     JSONObject exam = new JSONObject();
     JSONObject errors = new JSONObject();
