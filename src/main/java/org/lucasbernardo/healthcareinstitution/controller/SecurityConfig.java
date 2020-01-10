@@ -15,6 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity security) throws Exception {
+    // Disable the default login form
     security.httpBasic().disable();
     security.csrf().disable();
   }

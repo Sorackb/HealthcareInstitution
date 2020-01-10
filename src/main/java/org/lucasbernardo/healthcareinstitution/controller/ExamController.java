@@ -32,25 +32,49 @@ public class ExamController {
   @Autowired
   private ExamService examService;
 
+  /**
+   * Create an Exam based on details provided from the owner's Healthcare
+   * Institution.
+   *
+   * @param owner The Healthcare Institution who requested the exam
+   * @param exam Detail of the Exam to be created
+   * @return The exam that was created
+   */
   @PostMapping
   public Exam createExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-      @Valid @RequestBody Exam exam) {
+          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+          @Valid @RequestBody Exam exam) {
     return this.examService.create(exam, owner);
   }
 
+  /**
+   * Update an existent Exam based on details provided from the owner's
+   * Healthcare Institution.
+   *
+   * @param owner The Healthcare Institution who requested the exam
+   * @param examId The exam identifier
+   * @param exam Detail to update the Exam
+   * @return The exam that was updated
+   */
   @PutMapping("/{id}")
   public ResponseEntity<Exam> updateExam(
-      @ApiIgnore  @RequestAttribute HealthcareInstitution owner,
-      @PathVariable(value = "id") Integer examId,
-      @Valid @RequestBody Exam exam) {
+          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+          @PathVariable(value = "id") Integer examId,
+          @Valid @RequestBody Exam exam) {
     return ResponseEntity.ok(this.examService.update(exam, owner, examId));
   }
 
+  /**
+   * Delete an existent Exam.
+   *
+   * @param owner The Healthcare Institution who requested the exam
+   * @param examId The exam identifier
+   * @return A message telling if the Exam was sucessfully deleted
+   */
   @DeleteMapping("/{id}")
   public Map<String, Boolean> deleteExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-      @PathVariable(value = "id") Integer examId) {
+          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+          @PathVariable(value = "id") Integer examId) {
     Map<String, Boolean> response = new HashMap<>();
 
     response.put("deleted", this.examService.delete(owner, examId));
@@ -58,10 +82,17 @@ public class ExamController {
     return response;
   }
 
+  /**
+   * Retrieve an specific Exam previously created.
+   *
+   * @param owner The Healthcare Institution who requested the exam
+   * @param examId The exam identifier
+   * @return The exam that was requested
+   */
   @GetMapping("/{id}")
   public ResponseEntity<Exam> getExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-      @PathVariable(value = "id") Integer examId) {
+          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+          @PathVariable(value = "id") Integer examId) {
     return ResponseEntity.ok().body(this.examService.find(owner, examId, true));
   }
 }

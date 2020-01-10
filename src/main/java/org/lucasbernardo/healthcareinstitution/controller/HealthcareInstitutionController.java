@@ -22,6 +22,13 @@ public class HealthcareInstitutionController {
   @Autowired
   private HealthcareInstitutionService healthcareInstitutionService;
 
+  /**
+   * Create a Healthcare Institution based on details provided.
+   *
+   * @param healthcareInstitution Detail of the Healthcare Institution to be
+   * created
+   * @return the Healthcare Institution that was createad
+   */
   @PostMapping
   public HealthcareInstitution createHealthcareInstitution(@Valid @RequestBody HealthcareInstitution healthcareInstitution) {
     return this.healthcareInstitutionService.create(healthcareInstitution);
