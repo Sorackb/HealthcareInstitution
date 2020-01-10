@@ -53,12 +53,13 @@ public class CreateHealthcareInstitutionTest {
     institution.put("CNPJ", "82.854.545/0001-20");
 
     request = new HttpEntity<>(institution.toString(), HEADERS);
-    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/", request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     // CNPJ returned shouldn't have special characters
     institution.put("CNPJ", "82854545000120");
-    JSONAssert.assertEquals(institution.toString(), response.getBody(), false);
+    institution.put("token", new JSONObject(response.getBody()).get("token"));
+    JSONAssert.assertEquals(institution.toString(), response.getBody(), true);
   }
 
   @Test
@@ -69,7 +70,7 @@ public class CreateHealthcareInstitutionTest {
     HttpEntity<String> request;
 
     request = new HttpEntity<>("{}", HEADERS);
-    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/", request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
@@ -91,7 +92,7 @@ public class CreateHealthcareInstitutionTest {
     institution.put("CNPJ", "82.854.545/0001-21");
 
     request = new HttpEntity<>(institution.toString(), HEADERS);
-    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/", request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
@@ -112,7 +113,7 @@ public class CreateHealthcareInstitutionTest {
     institution.put("CNPJ", "04.088.578/0001-00");
 
     request = new HttpEntity<>(institution.toString(), HEADERS);
-    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitution/", request, String.class);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
     // TODO Check unique at H2
     // assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -12,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -36,7 +37,7 @@ public class GetExamTest {
 
   @BeforeAll
   static void runBeforeAllTestMethods() {
-    HEADERS.setContentType(MediaType.APPLICATION_JSON);
+    HEADERS.setBearerAuth("$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW");
   }
 
   @Test
@@ -44,7 +45,9 @@ public class GetExamTest {
   void getExam_ValidExam_ShouldRetrieveExistentExam() throws JSONException {
     JSONObject exam = new JSONObject();
     ResponseEntity<String> response;
-    
+    HttpEntity<String> request;
+
+    request = new HttpEntity<>(HEADERS);
     exam.put("PatientName", "João");
     exam.put("PatientAge", 55);
     exam.put("PatientGender", "M");
@@ -52,7 +55,7 @@ public class GetExamTest {
     exam.put("PhysicianCRM", "45465223");
     exam.put("ProcedureName", "MRI");
 
-    response = this.restTemplate.getForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/1", String.class);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.GET, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     JSONAssert.assertEquals(exam.toString(), response.getBody(), false);
@@ -63,10 +66,13 @@ public class GetExamTest {
   void getExam_InvalidHealthcareInstitution_ShouldShowErrorMessage() throws JSONException {
     JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
-    response = this.restTemplate.getForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/1", String.class);
+    HttpEntity<String> request;
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    errors.put("HealthcareInstitution", "id \"1\" not found.");
+    request = new HttpEntity<>(HEADERS);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.GET, request, String.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    errors.put("error", "token \"$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW\" not found.");
     JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
 
@@ -75,7 +81,10 @@ public class GetExamTest {
   void getExam_InvalidExam_ShouldShowErrorMessage() throws JSONException {
     JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
-    response = this.restTemplate.getForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/1", String.class);
+    HttpEntity<String> request;
+
+    request = new HttpEntity<>(HEADERS);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.GET, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     errors.put("Exam", "id \"1\" not found.");
@@ -87,20 +96,24 @@ public class GetExamTest {
   void getExam_HealthcareInstitutionWithoutPixeons_ShouldShowErrorMessage() throws JSONException {
     JSONObject errors = new JSONObject();
     ResponseEntity<String> response;
+    HttpEntity<String> request;
 
-    response = this.restTemplate.getForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/1", String.class);
-    
+    request = new HttpEntity<>(HEADERS);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.GET, request, String.class);
+
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     errors.put("HealthcareInstitution", "Out of budget.");
     JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
-  
+
   @Test
   @DataSet({"integration/exam_charged.yml", "integration/healthcare_institution_uncharged.yml", "integration/cleanup.yml"})
   void getExam_AlreadyChargedExam_ShouldRetrieveExistentExam() throws JSONException {
     JSONObject exam = new JSONObject();
     ResponseEntity<String> response;
-    
+    HttpEntity<String> request;
+
+    request = new HttpEntity<>(HEADERS);
     exam.put("PatientName", "João");
     exam.put("PatientAge", 55);
     exam.put("PatientGender", "M");
@@ -108,7 +121,7 @@ public class GetExamTest {
     exam.put("PhysicianCRM", "45465223");
     exam.put("ProcedureName", "MRI");
 
-    response = this.restTemplate.getForEntity("http://localhost:" + port + "/healthcareinstitution/1/exam/1", String.class);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.GET, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     JSONAssert.assertEquals(exam.toString(), response.getBody(), false);

@@ -2,4 +2,5 @@ healthcare_institution:
   - id: 1
     name: lucasbernardo.org
     cnpj: "04088578000100"
+    token: $2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW
     balance: 0

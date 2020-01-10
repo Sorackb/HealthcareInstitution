@@ -39,6 +39,7 @@ public class DeleteExamTest {
   @BeforeAll
   static void runBeforeAllTestMethods() {
     HEADERS.setContentType(MediaType.APPLICATION_JSON);
+    HEADERS.setBearerAuth("$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW");
   }
 
   @Test
@@ -49,7 +50,7 @@ public class DeleteExamTest {
     HttpEntity<String> request;
 
     request = new HttpEntity<>(HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.DELETE, request, String.class);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.DELETE, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     confirmation.put("deleted", true);
@@ -64,10 +65,10 @@ public class DeleteExamTest {
     HttpEntity<String> request;
 
     request = new HttpEntity<>(HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.DELETE, request, String.class);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.DELETE, request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    errors.put("HealthcareInstitution", "id \"1\" not found.");
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    errors.put("error", "token \"$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW\" not found.");
     JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
 
@@ -79,7 +80,7 @@ public class DeleteExamTest {
     HttpEntity<String> request;
 
     request = new HttpEntity<>(HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.DELETE, request, String.class);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.DELETE, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     errors.put("Exam", "id \"1\" not found.");
@@ -94,7 +95,7 @@ public class DeleteExamTest {
     HttpEntity<String> request;
 
     request = new HttpEntity<>(HEADERS);
-    response = this.restTemplate.exchange("http://localhost:" + port + "/healthcareinstitution/1/exam/1", HttpMethod.DELETE, request, String.class);
+    response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.DELETE, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     confirmation.put("deleted", true);

@@ -5,22 +5,36 @@
 [ci-img]:          https://travis-ci.org/Sorackb/HealthcareInstitution.svg
 [ci]:              https://travis-ci.org/Sorackb/HealthcareInstitution
 
-
 An API that will take control over the healthcare institution registration as well as the exams ingest.
+
+## Requirements
+
+  - Java SE Development Kit 8 or higher;
+  - Maven 2.0.9 or higher;
+
+## Running
+
+  ```bash
+  mvn spring-boot:run
+  ```
 
 ## API documentation
 
-A API description and try-out methods can be viewed in the following URL:
+The API description and try-out methods can be viewed in the following URL:
 
   /swagger-ui.html
 
+### healthcareinstitutions
+
+  An API that will take control over the healthcare institution registration.
+
 **Create a Healthcare Institution**
 ---
-  Creates a single Healthcare Institution.
+  Creates a single Healthcare Institution. The **token** returned needs to be used as Beared Authentication Header for **exams** API.
 
 * **URL**
 
-  /healthcareinstitution/
+  /healthcareinstitutions/
 
 * **Method:**
 
@@ -36,7 +50,7 @@ A API description and try-out methods can be viewed in the following URL:
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ "id": 4, "Name": "lucasbernardo.org", "CNPJ": "16191374000171" }`
+    **Content:** `{ "Name": "lucasbernardo.org", "CNPJ": "16191374000171", "token": "XXXXXX.XXXXXXXXXXXXX" }`
 
 * **Error Response:**
 
@@ -57,7 +71,7 @@ A API description and try-out methods can be viewed in the following URL:
 
   ```javascript
   $.ajax({
-    url: '/healthcareinstitution/',
+    url: '/exams/',
     method: 'POST',
     timeout: 0,
     dataType: 'json',
@@ -67,6 +81,10 @@ A API description and try-out methods can be viewed in the following URL:
   });
   ```
 
+### exams
+
+  An API that will take control over the exam ingest. The Beared Authentication Header is required and can be obtain creating a healthcare institution.
+
 ---
 **Create a Exam**
 ---
@@ -74,17 +92,11 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **URL**
 
-  /healthcareinstitution/:healthcare_institution_id/exam
+  /exams/
 
 * **Method:**
 
   `POST`
-
-*  **URL Params**
-
-   **Required:**
-
-   `healthcare_institution_id=[integer]`
 
 * **Data Params**
 
@@ -105,7 +117,6 @@ A API description and try-out methods can be viewed in the following URL:
   {
     "id": 6,
     "healthcareInstitution": {
-      "id": 1,
       "Name": "lucasbernardo.org",
       "CNPJ": "16191374000171"
     },
@@ -120,8 +131,8 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ "HealthcareInstitution": "id \"2\" not found." }`
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "token \"XXXXXX.XXXXXXXXXXXXX\" not found." }`
 
   OR
 
@@ -147,10 +158,14 @@ A API description and try-out methods can be viewed in the following URL:
 
   ```javascript
   $.ajax({
-    url: '/healthcareinstitution/1/exam/',
+    url: '/exams/',
     method: 'POST',
     timeout: 0,
     dataType: 'json',
+	"headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer XXXXXX.XXXXXXXXXXXXX"
+    },
     data: JSON.stringify({
       PatientName: 'John Doe',
       PatientAge: 55,
@@ -171,7 +186,7 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **URL**
 
-  /healthcareinstitution/:healthcare_institution_id/exam/:exam_id/
+  /exams/:id/
 
 * **Method:**
 
@@ -181,8 +196,7 @@ A API description and try-out methods can be viewed in the following URL:
 
    **Required:**
 
-   `healthcare_institution_id=[integer]`<br />
-   `exam_id=[integer]`
+   `id=[integer]`
 
 * **Data Params**
 
@@ -218,8 +232,8 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ "HealthcareInstitution": "id \"2\" not found." }`
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "token \"XXXXXX.XXXXXXXXXXXXX\" not found." }`
 
   OR
 
@@ -245,10 +259,14 @@ A API description and try-out methods can be viewed in the following URL:
 
   ```javascript
   $.ajax({
-    url: '/healthcareinstitution/1/exam/6',
+    url: '/exams/6',
     method: 'PUT',
     timeout: 0,
     dataType: 'json',
+	"headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer XXXXXX.XXXXXXXXXXXXX"
+    },
     data: JSON.stringify({
       PatientName: 'John Doe',
       PatientAge: 55,
@@ -269,7 +287,7 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **URL**
 
-  /healthcareinstitution/:healthcare_institution_id/exam/:exam_id/
+  /exams/:id/
 
 * **Method:**
 
@@ -279,8 +297,7 @@ A API description and try-out methods can be viewed in the following URL:
 
    **Required:**
 
-   `healthcare_institution_id=[integer]`<br />
-   `exam_id=[integer]`
+   `id=[integer]`
 
 * **Success Response:**
 
@@ -289,8 +306,8 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ "HealthcareInstitution": "id \"2\" not found." }`
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "token \"XXXXXX.XXXXXXXXXXXXX\" not found." }`
 
   OR
 
@@ -301,9 +318,12 @@ A API description and try-out methods can be viewed in the following URL:
 
   ```javascript
   $.ajax({
-    url: '/healthcareinstitution/1/exam/6',
+    url: '/exams/6',
     method: 'DELETE',
     timeout: 0,
+	"headers": {
+      "Authorization": "Bearer XXXXXX.XXXXXXXXXXXXX"
+    }
   }).done(function (response) {
     console.log(response);
   });
@@ -316,7 +336,7 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **URL**
 
-  /healthcareinstitution/:healthcare_institution_id/exam/:exam_id/
+  /exams/:id/
 
 * **Method:**
 
@@ -326,8 +346,7 @@ A API description and try-out methods can be viewed in the following URL:
 
    **Required:**
 
-   `healthcare_institution_id=[integer]`<br />
-   `exam_id=[integer]`
+   `id=[integer]`
 
 * **Success Response:**
 
@@ -352,8 +371,8 @@ A API description and try-out methods can be viewed in the following URL:
 
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ "HealthcareInstitution": "id \"2\" not found." }`
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "token \"XXXXXX.XXXXXXXXXXXXX\" not found." }`
 
   OR
 
@@ -369,8 +388,11 @@ A API description and try-out methods can be viewed in the following URL:
 
   ```javascript
   $.ajax({
-    url: '/healthcareinstitution/1/exam/6',
+    url: '/exams/6',
     method: 'GET',
+	"headers": {
+      "Authorization": "Bearer XXXXXX.XXXXXXXXXXXXX"
+    },
     timeout: 0
   }).done(function (response) {
     console.log(response);

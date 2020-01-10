@@ -3,7 +3,6 @@ package org.lucasbernardo.healthcareinstitution.model;
 import org.lucasbernardo.healthcareinstitution.model.type.GenderType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class Exam implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "healthcare_institution_id", nullable = false)
   private HealthcareInstitution healthcareInstitution;
   @Column(name = "patient_name", nullable = false)
