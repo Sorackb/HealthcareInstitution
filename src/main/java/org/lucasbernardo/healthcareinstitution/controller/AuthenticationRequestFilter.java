@@ -40,6 +40,12 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
       add("/webjars/");
     }
   };
+  
+  private final List<String> exacts = new ArrayList<String>() {
+    {
+      add("/");
+    }
+  };
 
   @Autowired
   private TokenAuthenticationService tokenAuthenticationService;
@@ -48,7 +54,9 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
     try {
       final String path = request.getRequestURI();
-      final Boolean exclude = exclusions.stream().anyMatch((exclusion) -> path.startsWith(exclusion));
+      Boolean exclude = this.exclusions.stream().anyMatch((exclusion) -> path.startsWith(exclusion));
+
+      exclude = exclude || this.exacts.contains(path);
 
       if (exclude) {
         chain.doFilter(request, response);
