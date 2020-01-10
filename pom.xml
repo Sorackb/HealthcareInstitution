@@ -10,7 +10,7 @@
   </parent>
   <groupId>org.lucasbernardo</groupId>
   <artifactId>HealthcareInstitution</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>HealthcareInstitution</name>
   <description>An API that will take control over the healthcare institution registration as well as the exams ingest.</description>
 
