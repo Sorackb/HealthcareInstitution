@@ -32,7 +32,7 @@ public class ExamController {
   @Autowired
   private ExamService examService;
 
-  @PostMapping("/")
+  @PostMapping
   public Exam createExam(
       @ApiIgnore @RequestAttribute HealthcareInstitution owner,
       @Valid @RequestBody Exam exam) {

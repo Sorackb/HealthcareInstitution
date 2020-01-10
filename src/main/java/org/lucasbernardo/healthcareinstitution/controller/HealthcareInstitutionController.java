@@ -22,7 +22,7 @@ public class HealthcareInstitutionController {
   @Autowired
   private HealthcareInstitutionService healthcareInstitutionService;
 
-  @PostMapping("/")
+  @PostMapping
   public HealthcareInstitution createHealthcareInstitution(@Valid @RequestBody HealthcareInstitution healthcareInstitution) {
     return this.healthcareInstitutionService.create(healthcareInstitution);
   }
