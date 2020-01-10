@@ -37,7 +37,7 @@ public class GetExamTest {
 
   @BeforeAll
   static void runBeforeAllTestMethods() {
-    HEADERS.setBearerAuth("$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW");
+    HEADERS.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJjbnBqIjoiMDQwODg1NzgwMDAxMDAifQ.cstUO0j5xo6sPKNB_BhmkHDPpHS7UNIvQitcUC45hejIdK23N84RMpxH0X00DpQ6uZQAqKxxCnLcu_rFOevAXw");
   }
 
   @Test
@@ -72,7 +72,7 @@ public class GetExamTest {
     response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.GET, request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-    errors.put("error", "token \"$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW\" not found.");
+    errors.put("error", "token \"eyJhbGciOiJIUzUxMiJ9.eyJjbnBqIjoiMDQwODg1NzgwMDAxMDAifQ.cstUO0j5xo6sPKNB_BhmkHDPpHS7UNIvQitcUC45hejIdK23N84RMpxH0X00DpQ6uZQAqKxxCnLcu_rFOevAXw\" not found.");
     JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
 

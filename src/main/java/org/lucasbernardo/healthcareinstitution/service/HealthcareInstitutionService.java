@@ -6,7 +6,6 @@ import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundExcepti
 import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.lucasbernardo.healthcareinstitution.model.repository.HealthcareInstitutionRepository;
-import org.lucasbernardo.healthcareinstitution.tool.AuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HealthcareInstitutionService {
+  
+  @Autowired
+  private TokenAuthenticationService tokenAuthenticationService;
 
   @Autowired
   private HealthcareInstitutionRepository healthcareInstitutionRepository;
@@ -24,7 +26,7 @@ public class HealthcareInstitutionService {
     String token;
 
     healthcareInstitution.setCnpj(healthcareInstitution.getCnpj().replaceAll("\\D", ""));
-    token = AuthenticationToken.generateToken(healthcareInstitution.getCnpj());
+    token = tokenAuthenticationService.encode(healthcareInstitution.getCnpj());
     healthcareInstitution.setToken(token);
     healthcareInstitution.setVisibleToken(token);
 
@@ -37,12 +39,12 @@ public class HealthcareInstitutionService {
         .orElseThrow(() -> new ResourceNotFoundException("HealthcareInstitution", "id \"" + id + "\" not found."));
   }
 
-  public HealthcareInstitution findByToken(String token) {
+  public HealthcareInstitution findByCnpj(String cnpj) {
     List<HealthcareInstitution> healthcareInstitutions = this.healthcareInstitutionRepository
-        .findByToken(token);
+        .findByCnpj(cnpj);
 
     if (healthcareInstitutions.isEmpty()) {
-      throw new UnauthorizedException("error", "token \"" + token + "\" not found.");
+      return null;
     }
 
     return healthcareInstitutions.get(0);

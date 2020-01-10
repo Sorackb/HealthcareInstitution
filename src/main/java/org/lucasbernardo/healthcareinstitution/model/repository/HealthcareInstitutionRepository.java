@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface HealthcareInstitutionRepository extends JpaRepository<HealthcareInstitution, Integer> {
 
-  List<HealthcareInstitution> findByToken(String token);
+  List<HealthcareInstitution> findByCnpj(String cnpj);
 }

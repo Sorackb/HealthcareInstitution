@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  *
@@ -32,21 +33,23 @@ public class ExamController {
   private ExamService examService;
 
   @PostMapping("/")
-  public Exam createExam(@RequestAttribute HealthcareInstitution owner, @Valid @RequestBody Exam exam) {
+  public Exam createExam(
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+      @Valid @RequestBody Exam exam) {
     return this.examService.create(exam, owner);
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<Exam> updateExam(
-      @RequestAttribute HealthcareInstitution owner,
+      @ApiIgnore  @RequestAttribute HealthcareInstitution owner,
       @PathVariable(value = "id") Integer examId,
-      @Valid @RequestBody Exam examDetails) {
-    return ResponseEntity.ok(this.examService.update(examDetails, owner, examId));
+      @Valid @RequestBody Exam exam) {
+    return ResponseEntity.ok(this.examService.update(exam, owner, examId));
   }
 
   @DeleteMapping("/{id}")
   public Map<String, Boolean> deleteExam(
-      @RequestAttribute HealthcareInstitution owner,
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
       @PathVariable(value = "id") Integer examId) {
     Map<String, Boolean> response = new HashMap<>();
 
@@ -57,7 +60,7 @@ public class ExamController {
 
   @GetMapping("/{id}")
   public ResponseEntity<Exam> getExam(
-      @RequestAttribute HealthcareInstitution owner,
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
       @PathVariable(value = "id") Integer examId) {
     return ResponseEntity.ok().body(this.examService.find(owner, examId, true));
   }

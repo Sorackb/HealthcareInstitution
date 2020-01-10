@@ -50,14 +50,14 @@ public class CreateHealthcareInstitutionTest {
     HttpEntity<String> request;
 
     institution.put("Name", "lucassouza.org");
-    institution.put("CNPJ", "82.854.545/0001-20");
+    institution.put("CNPJ", "04.088.578/0001-00");
 
     request = new HttpEntity<>(institution.toString(), HEADERS);
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     // CNPJ returned shouldn't have special characters
-    institution.put("CNPJ", "82854545000120");
+    institution.put("CNPJ", "04088578000100");
     institution.put("token", new JSONObject(response.getBody()).get("token"));
     JSONAssert.assertEquals(institution.toString(), response.getBody(), true);
   }

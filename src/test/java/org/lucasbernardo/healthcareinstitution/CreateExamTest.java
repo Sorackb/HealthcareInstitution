@@ -14,11 +14,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
@@ -40,7 +38,7 @@ public class CreateExamTest {
   @BeforeAll
   static void runBeforeAllTestMethods() {
     HEADERS.setContentType(MediaType.APPLICATION_JSON);
-    HEADERS.setBearerAuth("$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW");
+    HEADERS.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJjbnBqIjoiMDQwODg1NzgwMDAxMDAifQ.cstUO0j5xo6sPKNB_BhmkHDPpHS7UNIvQitcUC45hejIdK23N84RMpxH0X00DpQ6uZQAqKxxCnLcu_rFOevAXw");
   }
 
   @Test
@@ -83,7 +81,7 @@ public class CreateExamTest {
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/exams/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-    errors.put("error", "token \"$2a$10$uCTB.oxLSGsER91Zq2ns7eo3XzSyGyiZfTrceEKtSrJEOID/773oW\" not found.");
+    errors.put("error", "token \"eyJhbGciOiJIUzUxMiJ9.eyJjbnBqIjoiMDQwODg1NzgwMDAxMDAifQ.cstUO0j5xo6sPKNB_BhmkHDPpHS7UNIvQitcUC45hejIdK23N84RMpxH0X00DpQ6uZQAqKxxCnLcu_rFOevAXw\" not found.");
     JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
 

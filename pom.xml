@@ -10,7 +10,7 @@
   </parent>
   <groupId>org.lucasbernardo</groupId>
   <artifactId>HealthcareInstitution</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <name>HealthcareInstitution</name>
   <description>An API that will take control over the healthcare institution registration as well as the exams ingest.</description>
 
@@ -66,6 +66,14 @@
       <artifactId>springfox-bean-validators</artifactId>
       <version>2.9.2</version>
     </dependency>
+    
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+
+    
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

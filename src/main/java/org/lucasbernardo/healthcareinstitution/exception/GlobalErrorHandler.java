@@ -1,5 +1,6 @@
 package org.lucasbernardo.healthcareinstitution.exception;
 
+import io.jsonwebtoken.MalformedJwtException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -44,6 +45,16 @@ public class GlobalErrorHandler implements ErrorController {
   @ExceptionHandler(ResourceNotFoundException.class)
   protected Map<String, String> handleResourceNotFoundExceptions(ResourceNotFoundException ex) {
     return ex.toMap();
+  }
+
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ExceptionHandler(MalformedJwtException.class)
+  protected Map<String, String> handleMalformedJwtExceptionExceptions(MalformedJwtException ex) {
+    Map<String, String> errors = new HashMap<>();
+    
+    errors.put("error", ex.getMessage());
+
+    return errors;
   }
 
   @ResponseStatus(HttpStatus.UNAUTHORIZED)

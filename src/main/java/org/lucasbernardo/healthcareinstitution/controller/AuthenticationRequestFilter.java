@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.lucasbernardo.healthcareinstitution.service.HealthcareInstitutionService;
+import org.lucasbernardo.healthcareinstitution.service.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -42,7 +43,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   };
 
   @Autowired
-  private HealthcareInstitutionService healthcareInstitutionService;
+  private TokenAuthenticationService tokenAuthenticationService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -63,7 +64,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
 
       final String token = authorization.substring(7);
 
-      HealthcareInstitution healthcareInstitution = this.healthcareInstitutionService.findByToken(token);
+      HealthcareInstitution healthcareInstitution = this.tokenAuthenticationService.getOwner(token);
 
       request.setAttribute("owner", healthcareInstitution);
 
