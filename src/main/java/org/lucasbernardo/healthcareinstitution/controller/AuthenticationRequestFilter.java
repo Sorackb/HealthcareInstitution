@@ -28,22 +28,10 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   @Autowired
   @Qualifier("handlerExceptionResolver")
   private HandlerExceptionResolver resolver;
-
-  private final List<String> exclusions = new ArrayList<String>() {
-    {
-      add("/healthcareinstitution");
-      add("/v2/api-docs");
-      add("/configuration/ui");
-      add("/swagger-resources");
-      add("/configuration/security");
-      add("/swagger-ui.html");
-      add("/webjars/");
-    }
-  };
   
-  private final List<String> exacts = new ArrayList<String>() {
+  private final List<String> secured = new ArrayList<String>() {
     {
-      add("/");
+      add("/exams");
     }
   };
 
@@ -54,11 +42,9 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
     try {
       final String path = request.getRequestURI();
-      Boolean exclude = this.exclusions.stream().anyMatch((exclusion) -> path.startsWith(exclusion));
+      Boolean validate = this.secured.stream().anyMatch((item) -> path.startsWith(item));
 
-      exclude = exclude || this.exacts.contains(path);
-
-      if (exclude) {
+      if (!validate) {
         chain.doFilter(request, response);
         return;
       }
