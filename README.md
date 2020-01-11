@@ -11,6 +11,7 @@ An API that will take control over the healthcare institution registration as we
 
   - Java SE Development Kit 8 or higher;
   - Maven 2.0.9 or higher;
+  - MySQL 5.0 or higher (The configuration of the connection can be done by editing the `\main\resources\application.properties` file or with the `DATASOURCE_HOST`, `DATASOURCE_SCHEMA`, `DATASOURCE_USERNAME` and `DATASOURCE_PASSWORD` environment variables).
 
 ## Running
 
