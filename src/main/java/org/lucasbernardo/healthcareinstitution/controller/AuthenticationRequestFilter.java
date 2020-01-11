@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
-import org.lucasbernardo.healthcareinstitution.service.HealthcareInstitutionService;
 import org.lucasbernardo.healthcareinstitution.service.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,16 +28,10 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   @Autowired
   @Qualifier("handlerExceptionResolver")
   private HandlerExceptionResolver resolver;
-
-  private final List<String> exclusions = new ArrayList<String>() {
+  
+  private final List<String> secured = new ArrayList<String>() {
     {
-      add("/healthcareinstitution");
-      add("/v2/api-docs");
-      add("/configuration/ui");
-      add("/swagger-resources");
-      add("/configuration/security");
-      add("/swagger-ui.html");
-      add("/webjars/");
+      add("/exams");
     }
   };
 
@@ -49,9 +42,9 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
     try {
       final String path = request.getRequestURI();
-      final Boolean exclude = exclusions.stream().anyMatch((exclusion) -> path.startsWith(exclusion));
+      Boolean validate = this.secured.stream().anyMatch((item) -> path.startsWith(item));
 
-      if (exclude) {
+      if (!validate) {
         chain.doFilter(request, response);
         return;
       }

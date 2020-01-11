@@ -2,7 +2,6 @@ package org.lucasbernardo.healthcareinstitution.controller;
 
 import com.google.common.base.Predicates;
 import static io.swagger.annotations.ApiKeyAuthDefinition.ApiKeyLocation.HEADER;
-import io.swagger.annotations.AuthorizationScope;
 import static java.util.Collections.singletonList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
