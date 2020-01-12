@@ -5,10 +5,14 @@ jdk:
   - openjdk8
 services:
   - docker
+addons:
+  sonarcloud:
+    organization: "sorackb"
+    token:
+      secure: $SONAR_TOKEN
 # Test & Build SpringBoot app
 script:
-  - mvn test
-  - mvn clean package -DskipTests
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install package sonar:sonar -Dsonar.projectKey=Sorackb_HealthcareInstitution
 # Create Docker image for our app and push it to Dockerhub repository
 after_success:
   - export COMMIT=${TRAVIS_COMMIT::7}
