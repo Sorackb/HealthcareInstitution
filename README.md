@@ -1,10 +1,10 @@
 # HealthcareInstitution
 
 [![Build Status][ci-img]][ci]
-[![Sonarcloud Status][sonar-status-img][sonar-status]
-[![SonarCloud Coverage][sonar-coverage-img][sonar-coverage]
-[![SonarCloud Bugs][sonar-bugs-img][sonar-bugs]
-[![SonarCloud Vulnerabilities][sonar-vulnerabilities-img][sonar-vulnerabilities]
+[![Sonarcloud Status][sonar-status-img]][sonar-status]
+[![SonarCloud Coverage][sonar-coverage-img]][sonar-coverage]
+[![SonarCloud Bugs][sonar-bugs-img]][sonar-bugs]
+[![SonarCloud Vulnerabilities][sonar-vulnerabilities-img]][sonar-vulnerabilities]
 
 [ci-img]:                    https://travis-ci.org/Sorackb/HealthcareInstitution.svg
 [ci]:                        https://travis-ci.org/Sorackb/HealthcareInstitution
