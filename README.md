@@ -1,9 +1,21 @@
 # HealthcareInstitution
 
 [![Build Status][ci-img]][ci]
+[![Sonarcloud Status][sonar-status-img][sonar-status]
+[![SonarCloud Coverage][sonar-coverage-img][sonar-coverage]
+[![SonarCloud Bugs][sonar-bugs-img][sonar-bugs]
+[![SonarCloud Vulnerabilities][sonar-vulnerabilities-img][sonar-vulnerabilities]
 
-[ci-img]:          https://travis-ci.org/Sorackb/HealthcareInstitution.svg
-[ci]:              https://travis-ci.org/Sorackb/HealthcareInstitution
+[ci-img]:                    https://travis-ci.org/Sorackb/HealthcareInstitution.svg
+[ci]:                        https://travis-ci.org/Sorackb/HealthcareInstitution
+[sonar-status-img]:          https://sonarcloud.io/api/project_badges/measure?project=Sorackb_HealthcareInstitution&metric=alert_status
+[sonar-status]:              https://sonarcloud.io/dashboard?id=Sorackb_HealthcareInstitution
+[sonar-coverage-img]:        https://sonarcloud.io/api/project_badges/measure?project=Sorackb_HealthcareInstitution&metric=coverage
+[sonar-coverage]:            https://sonarcloud.io/component_measures/metric/coverage/list?id=Sorackb_HealthcareInstitution
+[sonar-bugs-img]:            https://sonarcloud.io/api/project_badges/measure?project=Sorackb_HealthcareInstitution&metric=bugs
+[sonar-bugs]:                https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=Sorackb_HealthcareInstitution
+[sonar-vulnerabilities-img]: https://sonarcloud.io/api/project_badges/measure?project=Sorackb_HealthcareInstitution&metric=vulnerabilities
+[sonar-vulnerabilities]:     https://sonarcloud.io/component_measures/metric/security_rating/list?id=Sorackb_HealthcareInstitution
 
 An API that will take control over the healthcare institution registration as well as the exams ingest.
 
