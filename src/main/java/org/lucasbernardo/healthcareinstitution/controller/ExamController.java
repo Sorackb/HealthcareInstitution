@@ -1,6 +1,8 @@
 package org.lucasbernardo.healthcareinstitution.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
@@ -24,7 +26,10 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  * @author Lucas<sorackb@gmail.com>
  */
-@Api(tags = "exams", description = "An API that will take control over the exam ingest.")
+@Api(tags = {"exams"})
+@SwaggerDefinition(tags = {
+  @Tag(name = "exams", description = "An API that will take control over the exam ingest.")
+})
 @RestController
 @RequestMapping("/exams")
 public class ExamController {
@@ -42,8 +47,8 @@ public class ExamController {
    */
   @PostMapping
   public Exam createExam(
-          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-          @Valid @RequestBody Exam exam) {
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+      @Valid @RequestBody Exam exam) {
     return this.examService.create(exam, owner);
   }
 
@@ -58,9 +63,9 @@ public class ExamController {
    */
   @PutMapping("/{id}")
   public ResponseEntity<Exam> updateExam(
-          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-          @PathVariable(value = "id") Integer examId,
-          @Valid @RequestBody Exam exam) {
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+      @PathVariable(value = "id") Integer examId,
+      @Valid @RequestBody Exam exam) {
     return ResponseEntity.ok(this.examService.update(exam, owner, examId));
   }
 
@@ -73,8 +78,8 @@ public class ExamController {
    */
   @DeleteMapping("/{id}")
   public Map<String, Boolean> deleteExam(
-          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-          @PathVariable(value = "id") Integer examId) {
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+      @PathVariable(value = "id") Integer examId) {
     Map<String, Boolean> response = new HashMap<>();
 
     response.put("deleted", this.examService.delete(owner, examId));
@@ -91,8 +96,8 @@ public class ExamController {
    */
   @GetMapping("/{id}")
   public ResponseEntity<Exam> getExam(
-          @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-          @PathVariable(value = "id") Integer examId) {
+      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+      @PathVariable(value = "id") Integer examId) {
     return ResponseEntity.ok().body(this.examService.find(owner, examId, true));
   }
 }

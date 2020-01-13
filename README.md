@@ -149,6 +149,11 @@ The API description and try-out methods can be viewed in the following URL:
 
   OR
 
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "The resource is secured and no token was informed." }`
+
+  OR
+
   * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "patientName": "PatientName is mandatory." }`
 
@@ -250,6 +255,11 @@ The API description and try-out methods can be viewed in the following URL:
 
   OR
 
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "The resource is secured and no token was informed." }`
+
+  OR
+
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ "Exam": "id \"2\" not found." }`
 
@@ -324,6 +334,11 @@ The API description and try-out methods can be viewed in the following URL:
 
   OR
 
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "The resource is secured and no token was informed." }`
+
+  OR
+
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ "Exam": "id \"2\" not found." }`
 
@@ -386,6 +401,11 @@ The API description and try-out methods can be viewed in the following URL:
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ "error": "token \"XXXXXX.XXXXXXXXXXXXX\" not found." }`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ "error": "The resource is secured and no token was informed." }`
 
   OR
 

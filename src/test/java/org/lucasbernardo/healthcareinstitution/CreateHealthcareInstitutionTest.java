@@ -116,8 +116,8 @@ public class CreateHealthcareInstitutionTest {
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
     // TODO Check unique at H2
-    // assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    assertThat(HttpStatus.INTERNAL_SERVER_ERROR).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     errors.put("cnpj", "\"Duplicate entry '04088578000100' for key 'CNPJ'\".");
-    // JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
+    JSONAssert.assertEquals(errors.toString(), errors, true);
   }
 }

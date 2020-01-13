@@ -86,6 +86,57 @@ public class CreateExamTest {
   }
 
   @Test
+  @DataSet({"integration/cleanup.yml"})
+  void createExam_EmptyToken_ShouldShowErrorMessage() throws JSONException {
+    JSONObject exam = new JSONObject();
+    JSONObject errors = new JSONObject();
+    HttpHeaders headers = new HttpHeaders();
+    ResponseEntity<String> response;
+    HttpEntity<String> request;
+
+    exam.put("PatientName", "João");
+    exam.put("PatientAge", 55);
+    exam.put("PatientGender", "M");
+    exam.put("PhysicianName", "Dr. José");
+    exam.put("PhysicianCRM", "45465223");
+    exam.put("ProcedureName", "MRI");
+
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.setBearerAuth("123123123213313123");
+    request = new HttpEntity<>(exam.toString(), headers);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/exams/", request, String.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    errors.put("error", "JWT strings must contain exactly 2 period characters. Found: 0");
+    JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
+  }
+
+  @Test
+  @DataSet({"integration/cleanup.yml"})
+  void createExam_MalformedJwtToken_ShouldShowErrorMessage() throws JSONException {
+    JSONObject exam = new JSONObject();
+    JSONObject errors = new JSONObject();
+    HttpHeaders headers = new HttpHeaders();
+    ResponseEntity<String> response;
+    HttpEntity<String> request;
+
+    exam.put("PatientName", "João");
+    exam.put("PatientAge", 55);
+    exam.put("PatientGender", "M");
+    exam.put("PhysicianName", "Dr. José");
+    exam.put("PhysicianCRM", "45465223");
+    exam.put("ProcedureName", "MRI");
+
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    request = new HttpEntity<>(exam.toString(), headers);
+    response = this.restTemplate.postForEntity("http://localhost:" + port + "/exams/", request, String.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    errors.put("error", "The resource is secured and no token was informed.");
+    JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
+  }
+
+  @Test
   @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
   void createExam_IncompleteExam_ShouldShowErrorMessage() throws JSONException {
     JSONObject errors = new JSONObject();

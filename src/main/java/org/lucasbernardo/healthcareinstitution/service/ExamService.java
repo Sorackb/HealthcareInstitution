@@ -51,7 +51,7 @@ public class ExamService {
 
     exam = exams.get(0);
 
-    if (charge && !exam.isCharged()) {
+    if (Boolean.TRUE.equals(charge) && !exam.isCharged()) {
       this.healthcareInstitutionService.charge(healthcareInstitution);
       exam.setCharged(true);
       exam = this.examRepository.save(exam);

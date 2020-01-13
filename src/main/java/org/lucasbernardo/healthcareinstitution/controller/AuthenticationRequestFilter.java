@@ -1,7 +1,7 @@
 package org.lucasbernardo.healthcareinstitution.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,11 +29,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   @Qualifier("handlerExceptionResolver")
   private HandlerExceptionResolver resolver;
   
-  private final List<String> secured = new ArrayList<String>() {
-    {
-      add("/exams");
-    }
-  };
+  private final List<String> secured = Arrays.asList("/exams");
 
   @Autowired
   private TokenAuthenticationService tokenAuthenticationService;
@@ -42,9 +38,9 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
     try {
       final String path = request.getRequestURI();
-      Boolean validate = this.secured.stream().anyMatch((item) -> path.startsWith(item));
+      Boolean validate = this.secured.stream().anyMatch(path::startsWith);
 
-      if (!validate) {
+      if (Boolean.FALSE.equals(validate)) {
         chain.doFilter(request, response);
         return;
       }
@@ -52,7 +48,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
       final String authorization = request.getHeader("Authorization");
 
       if (authorization == null || authorization.isEmpty()) {
-        throw new UnauthorizedException("error", "Invalid Token.");
+        throw new UnauthorizedException("error", "The resource is secured and no token was informed.");
       }
 
       final String token = authorization.substring(7);
