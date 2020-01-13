@@ -5,6 +5,7 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import javax.validation.Valid;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
+import org.lucasbernardo.healthcareinstitution.model.dto.HealthcareInstitutionDto;
 import org.lucasbernardo.healthcareinstitution.service.HealthcareInstitutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,7 @@ public class HealthcareInstitutionController {
    * @return the Healthcare Institution that was createad
    */
   @PostMapping
-  public HealthcareInstitution createHealthcareInstitution(@Valid @RequestBody HealthcareInstitution healthcareInstitution) {
+  public HealthcareInstitutionDto createHealthcareInstitution(@Valid @RequestBody HealthcareInstitutionDto healthcareInstitution) {
     return this.healthcareInstitutionService.create(healthcareInstitution);
   }
 }

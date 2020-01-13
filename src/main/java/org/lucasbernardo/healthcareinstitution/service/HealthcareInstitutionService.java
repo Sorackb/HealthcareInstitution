@@ -4,7 +4,9 @@ import java.util.List;
 import org.lucasbernardo.healthcareinstitution.exception.BusinessRuleException;
 import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
+import org.lucasbernardo.healthcareinstitution.model.dto.HealthcareInstitutionDto;
 import org.lucasbernardo.healthcareinstitution.model.repository.HealthcareInstitutionRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,34 +23,30 @@ public class HealthcareInstitutionService {
   @Autowired
   private HealthcareInstitutionRepository healthcareInstitutionRepository;
 
+  @Autowired
+  private ModelMapper modelMapper;
+
   /**
    * Create a Healthcare Institution based on details provided.
    *
-   * @param healthcareInstitution Detail of the Healthcare Institution to be
+   * @param healthcareInstitutionDto Detail of the Healthcare Institution to be
    * created
    * @return the Healthcare Institution that was createad
    */
-  public HealthcareInstitution create(HealthcareInstitution healthcareInstitution) {
+  public HealthcareInstitutionDto create(HealthcareInstitutionDto healthcareInstitutionDto) {
+    HealthcareInstitutionDto result;
+    HealthcareInstitution healthcareInstitution;
     String token;
 
-    healthcareInstitution.setCnpj(healthcareInstitution.getCnpj().replaceAll("\\D", ""));
-    token = tokenAuthenticationService.encode(healthcareInstitution.getCnpj());
+    healthcareInstitutionDto.setCnpj(healthcareInstitutionDto.getCnpj().replaceAll("\\D", ""));
+    token = tokenAuthenticationService.encode(healthcareInstitutionDto.getCnpj());
+    //healthcareInstitution.setVisibleToken(token);
+    healthcareInstitution = this.modelMapper.map(healthcareInstitutionDto, HealthcareInstitution.class);
     healthcareInstitution.setToken(token);
-    healthcareInstitution.setVisibleToken(token);
+    healthcareInstitution = this.healthcareInstitutionRepository.save(healthcareInstitution);
+    result = this.modelMapper.map(healthcareInstitution, HealthcareInstitutionDto.class);
 
-    return this.healthcareInstitutionRepository.save(healthcareInstitution);
-  }
-
-  /**
-   * Find a specific Healthcare Institution based on it's identifier.
-   *
-   * @param id The identifier of the Healthcare Institution
-   * @return The Healthcare Institution finded
-   */
-  public HealthcareInstitution findById(Integer id) {
-    return this.healthcareInstitutionRepository
-            .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("HealthcareInstitution", "id \"" + id + "\" not found."));
+    return result;
   }
 
   /**

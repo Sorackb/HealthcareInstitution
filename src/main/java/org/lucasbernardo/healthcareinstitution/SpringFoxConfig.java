@@ -1,4 +1,4 @@
-package org.lucasbernardo.healthcareinstitution.controller;
+package org.lucasbernardo.healthcareinstitution;
 
 import com.google.common.base.Predicates;
 import static io.swagger.annotations.ApiKeyAuthDefinition.ApiKeyLocation.HEADER;
