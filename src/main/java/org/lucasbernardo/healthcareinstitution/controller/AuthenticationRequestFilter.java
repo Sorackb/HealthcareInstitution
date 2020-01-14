@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
-import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
+import org.lucasbernardo.healthcareinstitution.service.HealthcareInstitutionService;
 import org.lucasbernardo.healthcareinstitution.service.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,35 +28,39 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   @Autowired
   @Qualifier("handlerExceptionResolver")
   private HandlerExceptionResolver resolver;
-  
+
   private final List<String> secured = Arrays.asList("/exams");
 
   @Autowired
   private TokenAuthenticationService tokenAuthenticationService;
+
+  @Autowired
+  private HealthcareInstitutionService healthcareInstitutionService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
     try {
       final String path = request.getRequestURI();
       Boolean validate = this.secured.stream().anyMatch(path::startsWith);
+      String authorization;
+      String token;
+      String cnpj;
 
       if (Boolean.FALSE.equals(validate)) {
         chain.doFilter(request, response);
         return;
       }
 
-      final String authorization = request.getHeader("Authorization");
+      authorization = request.getHeader("Authorization");
 
       if (authorization == null || authorization.isEmpty()) {
         throw new UnauthorizedException("error", "The resource is secured and no token was informed.");
       }
 
-      final String token = authorization.substring(7);
-
-      HealthcareInstitution healthcareInstitution = this.tokenAuthenticationService.getOwner(token);
-
-      request.setAttribute("owner", healthcareInstitution);
-
+      token = authorization.substring(7);
+      cnpj = this.tokenAuthenticationService.decode(token);
+      this.healthcareInstitutionService.checkCnpj(cnpj);
+      request.setAttribute("cnpj", cnpj);
       chain.doFilter(request, response);
     } catch (Exception ex) {
       Logger.getLogger(AuthenticationRequestFilter.class.getName()).log(Level.SEVERE, null, ex);

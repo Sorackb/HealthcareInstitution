@@ -2,7 +2,7 @@ package org.lucasbernardo.healthcareinstitution.service;
 
 import java.util.List;
 import org.lucasbernardo.healthcareinstitution.exception.BusinessRuleException;
-import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundException;
+import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.lucasbernardo.healthcareinstitution.model.dto.HealthcareInstitutionDto;
 import org.lucasbernardo.healthcareinstitution.model.repository.HealthcareInstitutionRepository;
@@ -27,6 +27,22 @@ public class HealthcareInstitutionService {
   private ModelMapper modelMapper;
 
   /**
+   * Check if the entered CNPJ has a entry on HealthcareInstitution
+   *
+   * @param cnpj The CNPJ of the Healthcare Institution
+   * @return If the CNPJ é from a valid Healthcare Institution
+   */
+  public Boolean checkCnpj(String cnpj) {
+    HealthcareInstitution result = this.findByCnpj(cnpj);
+
+    if (result == null) {
+      throw new UnauthorizedException("error", "The token entered is invalid.");
+    }
+
+    return true;
+  }
+
+  /**
    * Create a Healthcare Institution based on details provided.
    *
    * @param healthcareInstitutionDto Detail of the Healthcare Institution to be
@@ -34,13 +50,12 @@ public class HealthcareInstitutionService {
    * @return the Healthcare Institution that was createad
    */
   public HealthcareInstitutionDto create(HealthcareInstitutionDto healthcareInstitutionDto) {
-    HealthcareInstitutionDto result;
     HealthcareInstitution healthcareInstitution;
+    HealthcareInstitutionDto result;    
     String token;
 
     healthcareInstitutionDto.setCnpj(healthcareInstitutionDto.getCnpj().replaceAll("\\D", ""));
     token = tokenAuthenticationService.encode(healthcareInstitutionDto.getCnpj());
-    //healthcareInstitution.setVisibleToken(token);
     healthcareInstitution = this.modelMapper.map(healthcareInstitutionDto, HealthcareInstitution.class);
     healthcareInstitution.setToken(token);
     healthcareInstitution = this.healthcareInstitutionRepository.save(healthcareInstitution);

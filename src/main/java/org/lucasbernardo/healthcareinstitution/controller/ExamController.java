@@ -6,8 +6,7 @@ import io.swagger.annotations.Tag;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
-import org.lucasbernardo.healthcareinstitution.model.Exam;
-import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
+import org.lucasbernardo.healthcareinstitution.model.dto.ExamDto;
 import org.lucasbernardo.healthcareinstitution.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,48 +40,48 @@ public class ExamController {
    * Create an Exam based on details provided from the owner's Healthcare
    * Institution.
    *
-   * @param owner The Healthcare Institution who requested the exam
+   * @param cnpj The Healthcare Institution's CNPJ who requested the exam
    * @param exam Detail of the Exam to be created
    * @return The exam that was created
    */
   @PostMapping
-  public Exam createExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
-      @Valid @RequestBody Exam exam) {
-    return this.examService.create(exam, owner);
+  public ExamDto createExam(
+      @ApiIgnore @RequestAttribute String cnpj,
+      @Valid @RequestBody ExamDto exam) {
+    return this.examService.create(cnpj, exam);
   }
 
   /**
    * Update an existent Exam based on details provided from the owner's
    * Healthcare Institution.
    *
-   * @param owner The Healthcare Institution who requested the exam
+   * @param cnpj The Healthcare Institution's CNPJ who requested the exam
    * @param examId The exam identifier
    * @param exam Detail to update the Exam
    * @return The exam that was updated
    */
   @PutMapping("/{id}")
-  public ResponseEntity<Exam> updateExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+  public ResponseEntity<ExamDto> updateExam(
+      @ApiIgnore @RequestAttribute String cnpj,
       @PathVariable(value = "id") Integer examId,
-      @Valid @RequestBody Exam exam) {
-    return ResponseEntity.ok(this.examService.update(exam, owner, examId));
+      @Valid @RequestBody ExamDto exam) {
+    return ResponseEntity.ok(this.examService.update(cnpj, exam, examId));
   }
 
   /**
    * Delete an existent Exam.
    *
-   * @param owner The Healthcare Institution who requested the exam
+   * @param cnpj The Healthcare Institution's CNPJ who requested the exam
    * @param examId The exam identifier
    * @return A message telling if the Exam was sucessfully deleted
    */
   @DeleteMapping("/{id}")
   public Map<String, Boolean> deleteExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+      @ApiIgnore @RequestAttribute String cnpj,
       @PathVariable(value = "id") Integer examId) {
     Map<String, Boolean> response = new HashMap<>();
 
-    response.put("deleted", this.examService.delete(owner, examId));
+    response.put("deleted", this.examService.delete(cnpj, examId));
 
     return response;
   }
@@ -90,14 +89,14 @@ public class ExamController {
   /**
    * Retrieve an specific Exam previously created.
    *
-   * @param owner The Healthcare Institution who requested the exam
+   * @param cnpj The Healthcare Institution's CNPJ who requested the exam
    * @param examId The exam identifier
    * @return The exam that was requested
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Exam> getExam(
-      @ApiIgnore @RequestAttribute HealthcareInstitution owner,
+  public ResponseEntity<ExamDto> getExam(
+      @ApiIgnore @RequestAttribute String cnpj,
       @PathVariable(value = "id") Integer examId) {
-    return ResponseEntity.ok().body(this.examService.find(owner, examId, true));
+    return ResponseEntity.ok().body(this.examService.paidFind(cnpj, examId));
   }
 }

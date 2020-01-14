@@ -4,9 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Base64;
-import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
-import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +16,6 @@ public class TokenAuthenticationService {
 
   @Value("${jwt.secret}")
   private String secret;
-
-  @Autowired
-  private HealthcareInstitutionService healthcareInstitutionService;
 
   /**
    * Encode an CNPJ to JWT Token.
@@ -41,28 +35,12 @@ public class TokenAuthenticationService {
   }
 
   /**
-   * Get the Healthcare Institution that own the token.
-   *
-   * @param token The token of the Healthcare Institution
-   * @return The Healthcare Institution that own the token
-   */
-  public HealthcareInstitution getOwner(String token) {
-    HealthcareInstitution result = this.healthcareInstitutionService.findByCnpj(this.decode(token));
-
-    if (result == null) {
-      throw new UnauthorizedException("error", "token \"" + token + "\" not found.");
-    }
-
-    return result;
-  }
-
-  /**
    * Decode a token to a CNPJ
    *
    * @param token The token to be decoded
    * @return The CNPJ related with the token
    */
-  private String decode(String token) {
+  public String decode(String token) {
     return (String) Jwts.parser()
             .setSigningKey(this.encodeSecret())
             .parseClaimsJws(token)

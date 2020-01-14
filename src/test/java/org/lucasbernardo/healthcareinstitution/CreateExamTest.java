@@ -81,7 +81,7 @@ public class CreateExamTest {
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/exams/", request, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-    errors.put("error", "token \"eyJhbGciOiJIUzUxMiJ9.eyJjbnBqIjoiMDQwODg1NzgwMDAxMDAifQ.cstUO0j5xo6sPKNB_BhmkHDPpHS7UNIvQitcUC45hejIdK23N84RMpxH0X00DpQ6uZQAqKxxCnLcu_rFOevAXw\" not found.");
+    errors.put("error", "The token entered is invalid.");
     JSONAssert.assertEquals(errors.toString(), response.getBody(), true);
   }
 
