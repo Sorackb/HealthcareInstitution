@@ -1,5 +1,6 @@
 package org.lucasbernardo.healthcareinstitution.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -28,6 +29,10 @@ public class HealthcareInstitutionDto {
   private String cnpj;
 
   @ApiModelProperty(hidden = true)
+  @JsonProperty("token")
+  private String visibleToken;
+
+  @JsonIgnore
   private String token;
 
   public String getName() {
@@ -52,5 +57,13 @@ public class HealthcareInstitutionDto {
 
   public String getToken() {
     return token;
+  }
+
+  public String getVisibleToken() {
+    return visibleToken;
+  }
+
+  public void setVisibleToken(String visibleToken) {
+    this.visibleToken = visibleToken;
   }
 }

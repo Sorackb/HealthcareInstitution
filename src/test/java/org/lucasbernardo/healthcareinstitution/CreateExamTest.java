@@ -45,6 +45,7 @@ public class CreateExamTest {
   @DataSet({"integration/healthcare_institution.yml", "integration/cleanup.yml"})
   void createExam_ValidExam_ShouldCreateNewExam() throws JSONException {
     JSONObject exam = new JSONObject();
+    JSONObject healthcareInstitution = new JSONObject();
     ResponseEntity<String> response;
     HttpEntity<String> request;
 
@@ -58,7 +59,10 @@ public class CreateExamTest {
     request = new HttpEntity<>(exam.toString(), HEADERS);
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/exams/", request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);    
+    healthcareInstitution.put("Name", "lucasbernardo.org");
+    healthcareInstitution.put("CNPJ", "04088578000100");
+    exam.put("healthcareInstitution", healthcareInstitution);
     JSONAssert.assertEquals(exam.toString(), response.getBody(), false);
   }
 

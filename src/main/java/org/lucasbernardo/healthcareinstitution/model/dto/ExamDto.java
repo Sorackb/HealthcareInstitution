@@ -2,6 +2,7 @@ package org.lucasbernardo.healthcareinstitution.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,9 @@ import org.lucasbernardo.healthcareinstitution.model.validator.ValueOfEnum;
 @ApiModel(value = "Exam")
 public class ExamDto {
 
+  @ApiModelProperty(hidden = true)
+  private Integer id;
+  @ApiModelProperty(hidden = true)
   private HealthcareInstitutionDto healthcareInstitution;
   @JsonProperty("PatientName")
   @NotNull(message = "PatientName is mandatory.")
@@ -88,5 +92,21 @@ public class ExamDto {
 
   public void setProcedureName(String procedureName) {
     this.procedureName = procedureName;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public HealthcareInstitutionDto getHealthcareInstitution() {
+    return healthcareInstitution;
+  }
+
+  public void setHealthcareInstitution(HealthcareInstitutionDto healthcareInstitution) {
+    this.healthcareInstitution = healthcareInstitution;
   }
 }

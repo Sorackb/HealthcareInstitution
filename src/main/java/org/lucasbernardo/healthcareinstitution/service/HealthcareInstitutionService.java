@@ -60,6 +60,7 @@ public class HealthcareInstitutionService {
     healthcareInstitution.setToken(token);
     healthcareInstitution = this.healthcareInstitutionRepository.save(healthcareInstitution);
     result = this.modelMapper.map(healthcareInstitution, HealthcareInstitutionDto.class);
+    result.setVisibleToken(token);
 
     return result;
   }

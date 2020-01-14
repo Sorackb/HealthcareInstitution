@@ -7,7 +7,6 @@ import org.lucasbernardo.healthcareinstitution.model.repository.ExamRepository;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.lucasbernardo.healthcareinstitution.model.dto.ExamDto;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
