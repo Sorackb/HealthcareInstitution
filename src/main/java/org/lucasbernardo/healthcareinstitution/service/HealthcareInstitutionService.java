@@ -30,7 +30,7 @@ public class HealthcareInstitutionService {
    * Check if the entered CNPJ has a entry on HealthcareInstitution
    *
    * @param cnpj The CNPJ of the Healthcare Institution
-   * @return If the CNPJ Ã© from a valid Healthcare Institution
+   * @return If the CNPJ is from a valid Healthcare Institution
    */
   public Boolean checkCnpj(String cnpj) {
     HealthcareInstitution result = this.findByCnpj(cnpj);
@@ -94,8 +94,7 @@ public class HealthcareInstitutionService {
       throw new ResourceNotFoundException("HealthcareInstitution", "CNPJ \"" + cnpj + "\" not found.");
     }
 
-    HealthcareInstitutionDto result = this.modelMapper.map(healthcareInstitution, HealthcareInstitutionDto.class);
-    return result;
+    return this.modelMapper.map(healthcareInstitution, HealthcareInstitutionDto.class);
   }
 
   /**
