@@ -1,6 +1,5 @@
 package org.lucasbernardo.healthcareinstitution.model.repository;
 
-import java.util.List;
 import org.lucasbernardo.healthcareinstitution.model.Exam;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
 
-  List<Exam> findByIdAndHealthcareInstitution(Integer id, HealthcareInstitution healthcareInstitution);
+  Exam findOneByIdAndHealthcareInstitution(Integer id, HealthcareInstitution healthcareInstitution);
 }

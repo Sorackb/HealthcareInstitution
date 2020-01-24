@@ -1,6 +1,5 @@
 package org.lucasbernardo.healthcareinstitution.service;
 
-import java.util.List;
 import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundException;
 import org.lucasbernardo.healthcareinstitution.model.Exam;
 import org.lucasbernardo.healthcareinstitution.model.repository.ExamRepository;
@@ -51,14 +50,11 @@ public class ExamService {
    */
   private Exam find(String cnpj, Integer id, Boolean charge) {
     HealthcareInstitution healthcareInstitution = this.healthcareInstitutionService.findByCnpj(cnpj);
-    List<Exam> exams = this.examRepository.findByIdAndHealthcareInstitution(id, healthcareInstitution);
-    Exam exam;
+    Exam exam = this.examRepository.findOneByIdAndHealthcareInstitution(id, healthcareInstitution);
 
-    if (exams.isEmpty()) {
+    if (exam == null) {
       throw new ResourceNotFoundException("Exam", "id \"" + id + "\" not found.");
     }
-
-    exam = exams.get(0);
 
     if (Boolean.TRUE.equals(charge) && Boolean.FALSE.equals(exam.isCharged())) {
       this.healthcareInstitutionService.charge(healthcareInstitution);

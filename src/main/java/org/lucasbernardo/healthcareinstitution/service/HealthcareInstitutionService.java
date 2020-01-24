@@ -1,7 +1,7 @@
 package org.lucasbernardo.healthcareinstitution.service;
 
-import java.util.List;
 import org.lucasbernardo.healthcareinstitution.exception.BusinessRuleException;
+import org.lucasbernardo.healthcareinstitution.exception.ResourceNotFoundException;
 import org.lucasbernardo.healthcareinstitution.exception.UnauthorizedException;
 import org.lucasbernardo.healthcareinstitution.model.HealthcareInstitution;
 import org.lucasbernardo.healthcareinstitution.model.dto.HealthcareInstitutionDto;
@@ -30,7 +30,7 @@ public class HealthcareInstitutionService {
    * Check if the entered CNPJ has a entry on HealthcareInstitution
    *
    * @param cnpj The CNPJ of the Healthcare Institution
-   * @return If the CNPJ é from a valid Healthcare Institution
+   * @return If the CNPJ Ã© from a valid Healthcare Institution
    */
   public Boolean checkCnpj(String cnpj) {
     HealthcareInstitution result = this.findByCnpj(cnpj);
@@ -51,7 +51,7 @@ public class HealthcareInstitutionService {
    */
   public HealthcareInstitutionDto create(HealthcareInstitutionDto healthcareInstitutionDto) {
     HealthcareInstitution healthcareInstitution;
-    HealthcareInstitutionDto result;    
+    HealthcareInstitutionDto result;
     String token;
 
     healthcareInstitutionDto.setCnpj(healthcareInstitutionDto.getCnpj().replaceAll("\\D", ""));
@@ -72,14 +72,30 @@ public class HealthcareInstitutionService {
    * @return The Healthcare Institution finded
    */
   public HealthcareInstitution findByCnpj(String cnpj) {
-    List<HealthcareInstitution> healthcareInstitutions = this.healthcareInstitutionRepository
-            .findByCnpj(cnpj);
+    HealthcareInstitution healthcareInstitution = this.healthcareInstitutionRepository.findOneByCnpj(cnpj);
 
-    if (healthcareInstitutions.isEmpty()) {
+    if (healthcareInstitution == null) {
       return null;
     }
 
-    return healthcareInstitutions.get(0);
+    return healthcareInstitution;
+  }
+
+  /**
+   * Find a specific Healthcare Institution based on it's CNPJ.
+   *
+   * @param cnpj The CNPJ of the Healthcare Institution
+   * @return The Healthcare Institution finded
+   */
+  public HealthcareInstitutionDto findDtoByCnpj(String cnpj) {
+    HealthcareInstitution healthcareInstitution = this.findByCnpj(cnpj);
+
+    if (healthcareInstitution == null) {
+      throw new ResourceNotFoundException("HealthcareInstitution", "CNPJ \"" + cnpj + "\" not found.");
+    }
+
+    HealthcareInstitutionDto result = this.modelMapper.map(healthcareInstitution, HealthcareInstitutionDto.class);
+    return result;
   }
 
   /**

@@ -55,7 +55,8 @@ public class CreateHealthcareInstitutionTest {
     request = new HttpEntity<>(institution.toString(), HEADERS);
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/healthcareinstitutions/", request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    assertThat(response.getHeaders().getLocation().toString()).isEqualTo("http://localhost:" + port + "/healthcareinstitutions/04088578000100");
     // CNPJ returned shouldn't have special characters
     institution.put("CNPJ", "04088578000100");
     institution.put("token", new JSONObject(response.getBody()).get("token"));
