@@ -59,7 +59,8 @@ public class CreateExamTest {
     request = new HttpEntity<>(exam.toString(), HEADERS);
     response = this.restTemplate.postForEntity("http://localhost:" + port + "/exams/", request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);    
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    assertThat(response.getHeaders().getLocation().toString()).isEqualTo("http://localhost:" + port + "/exams/1");
     healthcareInstitution.put("Name", "lucasbernardo.org");
     healthcareInstitution.put("CNPJ", "04088578000100");
     exam.put("healthcareInstitution", healthcareInstitution);

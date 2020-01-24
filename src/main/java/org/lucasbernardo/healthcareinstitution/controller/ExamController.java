@@ -3,12 +3,12 @@ package org.lucasbernardo.healthcareinstitution.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URI;
 import javax.validation.Valid;
 import org.lucasbernardo.healthcareinstitution.model.dto.ExamDto;
 import org.lucasbernardo.healthcareinstitution.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
@@ -45,10 +47,20 @@ public class ExamController {
    * @return The exam that was created
    */
   @PostMapping
-  public ExamDto createExam(
+  public ResponseEntity<ExamDto> createExam(
       @ApiIgnore @RequestAttribute String cnpj,
       @Valid @RequestBody ExamDto exam) {
-    return this.examService.create(cnpj, exam);
+    ExamDto resource = this.examService.create(cnpj, exam);
+
+    URI location = ServletUriComponentsBuilder
+        .fromCurrentRequest()
+        .path("/{id}")
+        .buildAndExpand(resource.getId())
+        .toUri();
+
+    return ResponseEntity
+        .created(location)
+        .body(resource);
   }
 
   /**
@@ -73,17 +85,13 @@ public class ExamController {
    *
    * @param cnpj The Healthcare Institution's CNPJ who requested the exam
    * @param examId The exam identifier
-   * @return A message telling if the Exam was sucessfully deleted
    */
   @DeleteMapping("/{id}")
-  public Map<String, Boolean> deleteExam(
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void deleteExam(
       @ApiIgnore @RequestAttribute String cnpj,
       @PathVariable(value = "id") Integer examId) {
-    Map<String, Boolean> response = new HashMap<>();
-
-    response.put("deleted", this.examService.delete(cnpj, examId));
-
-    return response;
+    this.examService.delete(cnpj, examId);
   }
 
   /**

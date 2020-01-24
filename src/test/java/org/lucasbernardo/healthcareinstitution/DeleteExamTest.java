@@ -45,16 +45,13 @@ public class DeleteExamTest {
   @Test
   @DataSet({"integration/exam.yml", "integration/healthcare_institution.yml", "integration/cleanup.yml"})
   void deleteExam_ValidExam_ShouldUpdateExistentExam() throws JSONException {
-    JSONObject confirmation = new JSONObject();
     ResponseEntity<String> response;
     HttpEntity<String> request;
 
     request = new HttpEntity<>(HEADERS);
     response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.DELETE, request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    confirmation.put("deleted", true);
-    JSONAssert.assertEquals(confirmation.toString(), response.getBody(), false);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
   @Test
@@ -89,16 +86,13 @@ public class DeleteExamTest {
 
   @Test
   @DataSet({"integration/exam.yml", "integration/healthcare_institution_uncharged.yml", "integration/cleanup.yml"})
-  void deleteExam_HealthcareInstitutionWithoutPixeons_ShouldUpdateExistentExam() throws JSONException {
-    JSONObject confirmation = new JSONObject();
+  void deleteExam_HealthcareInstitutionWithoutPixeons_ShouldDeleteExistentExam() throws JSONException {
     ResponseEntity<String> response;
     HttpEntity<String> request;
 
     request = new HttpEntity<>(HEADERS);
     response = this.restTemplate.exchange("http://localhost:" + port + "/exams/1", HttpMethod.DELETE, request, String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    confirmation.put("deleted", true);
-    JSONAssert.assertEquals(confirmation.toString(), response.getBody(), false);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 }
