@@ -5,6 +5,7 @@
 [![SonarCloud Coverage][sonar-coverage-img]][sonar-coverage]
 [![SonarCloud Bugs][sonar-bugs-img]][sonar-bugs]
 [![SonarCloud Vulnerabilities][sonar-vulnerabilities-img]][sonar-vulnerabilities]
+[![Dependabot]][dependabot]
 
 [ci-img]:                    https://travis-ci.org/Sorackb/HealthcareInstitution.svg
 [ci]:                        https://travis-ci.org/Sorackb/HealthcareInstitution
@@ -16,6 +17,7 @@
 [sonar-bugs]:                https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=Sorackb_HealthcareInstitution
 [sonar-vulnerabilities-img]: https://sonarcloud.io/api/project_badges/measure?project=Sorackb_HealthcareInstitution&metric=vulnerabilities
 [sonar-vulnerabilities]:     https://sonarcloud.io/component_measures/metric/security_rating/list?id=Sorackb_HealthcareInstitution
+[dependabot]:                https://badgen.net/dependabot/Sorackb/HealthcareInstitution/?icon=dependabot
 
 An API that will take control over the healthcare institution registration as well as the exams ingest.
 
