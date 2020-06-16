@@ -8,8 +8,7 @@ services:
 addons:
   sonarcloud:
     organization: "sorackb"
-    token:
-      secure: $SONAR_TOKEN
+    token: $SONAR_TOKEN
 # Test & Build SpringBoot app
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install package sonar:sonar -Dsonar.projectKey=Sorackb_HealthcareInstitution
