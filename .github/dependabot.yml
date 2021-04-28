@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "08:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.modelmapper:modelmapper
+    versions:
+    - 2.4.0
+  - dependency-name: com.github.database-rider:rider-spring
+    versions:
+    - 1.22.0
